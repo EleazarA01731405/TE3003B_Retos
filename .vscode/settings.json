@@ -1,4 +1,4 @@
-{
+{ 
     "python.autoComplete.extraPaths": [
         "/home/mcr2/ros2_ws/install/tf_examples/lib/python3.10/site-packages",
         "/home/mcr2/ros2_ws/install/signal_proc/lib/python3.10/site-packages",
