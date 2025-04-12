@@ -11,9 +11,9 @@ from launch.substitutions import EnvironmentVariable, LocalSubstitution
 
 def generate_launch_description():
 
-    urdf_file_name = 'puzzle_drone.urdf'
+    urdf_file_name = 'puzzle_bot.urdf'
     urdf = os.path.join(
-        get_package_share_directory('link_act'),
+        get_package_share_directory('reto_sem_3'),
         'urdf',
         urdf_file_name)
     
@@ -54,9 +54,9 @@ def generate_launch_description():
                             )
     
     rviz_config = os.path.join(
-                            get_package_share_directory('link_act'),
+                            get_package_share_directory('reto_sem_3'),
                             'rviz',
-                            'puzzledrone.rviz'
+                            'puzzlebot.rviz'
                             )
     
     rviz_node = Node(name='rviz',
@@ -71,9 +71,14 @@ def generate_launch_description():
                     executable='rqt_tf_tree'
                     )
     
-    puzzledrone_node = Node(name="puzzledrone",
-                            package='link_act',
-                            executable='puzzle_drone'
+    puzzlebot_node = Node(name="puzzlebot",
+                            package='reto_sem_3',
+                            executable='puzzle_bot'
+                            )
+    
+    puzzlebot_sim_node = Node(name="puzzlebot_sim",
+                            package='reto_sem_3',
+                            executable='puzzlebot_sim'
                             )
 
     shutdown_on_exit = [RegisterEventHandler(
@@ -86,7 +91,7 @@ def generate_launch_description():
                                         reason='Node Exited'))
                                 ]
                             )
-                        ) for node in [robot_state_pub_node, puzzledrone_node]
+                        ) for node in [robot_state_pub_node, puzzlebot_node]
                     ]
  
 
@@ -100,6 +105,6 @@ def generate_launch_description():
                                     )
                                 )
 
-    l_d = LaunchDescription([static_transform_node, static_transform_node_2, robot_state_pub_node, rviz_node, rqt_tf_tree_node, puzzledrone_node, shutdown_log, *shutdown_on_exit])
+    l_d = LaunchDescription([static_transform_node, puzzlebot_sim_node,static_transform_node_2, robot_state_pub_node, rviz_node, rqt_tf_tree_node, puzzlebot_node, shutdown_log, *shutdown_on_exit])
 
     return l_d

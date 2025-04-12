@@ -3,7 +3,7 @@ import os
 from glob import glob
 
 
-package_name = 'link_act'
+package_name = 'reto_sem_3'
 
 setup(
     name=package_name,
@@ -29,7 +29,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'puzzle_drone = link_act.puzzle_drone:main'
+            'puzzle_bot = reto_sem_3.puzzle_bot:main',
+            'puzzlebot_sim = reto_sem_3.puzzlebot_sim:main',
         ],
     },
 )
