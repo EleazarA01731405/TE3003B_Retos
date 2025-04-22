@@ -80,6 +80,10 @@ def generate_launch_description():
                             package='reto_sem_3',
                             executable='puzzlebot_sim'
                             )
+    puzzlebot_control_node = Node(name="controller_node",
+                            package='reto_sem_3',
+                            executable='control'
+                            )
 
     shutdown_on_exit = [RegisterEventHandler(
                             OnProcessExit(
@@ -105,6 +109,6 @@ def generate_launch_description():
                                     )
                                 )
 
-    l_d = LaunchDescription([static_transform_node, puzzlebot_sim_node,static_transform_node_2, robot_state_pub_node, rviz_node, rqt_tf_tree_node, puzzlebot_node, shutdown_log, *shutdown_on_exit])
+    l_d = LaunchDescription([static_transform_node, puzzlebot_control_node,puzzlebot_sim_node,static_transform_node_2, robot_state_pub_node, rviz_node, rqt_tf_tree_node, puzzlebot_node, shutdown_log, *shutdown_on_exit])
 
     return l_d

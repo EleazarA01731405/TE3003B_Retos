@@ -48,12 +48,6 @@ class PuzzleBotPublisher(Node):
         # Subscriber to /cmd_vel
         self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_cb, 10)
 
-        # Publisher for /cmd_vel to make the robot move in a circle
-        self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
-
-        # Create a Timer for publishing /cmd_vel
-        self.cmd_vel_timer = self.create_timer(0.1, self.publish_cmd_vel)
-
         # Create a Timer for updating robot state
         timer_period = 0.01  # seconds
         self.timer = self.create_timer(timer_period, self.timer_cb)
@@ -62,13 +56,6 @@ class PuzzleBotPublisher(Node):
         """Callback for /cmd_vel topic."""
         self.linear_velocity = msg.linear.x
         self.angular_velocity = msg.angular.z
-
-    def publish_cmd_vel(self):
-        """Publish velocity commands to make the robot move in a circle."""
-        twist = Twist()
-        twist.linear.x = 0.1  # Constant linear velocity (m/s)
-        twist.angular.z = 0.2  # Constant angular velocity (rad/s)
-        self.cmd_vel_publisher.publish(twist)
 
     def timer_cb(self):
         """Timer callback to update robot state."""
