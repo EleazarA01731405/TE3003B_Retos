@@ -2,11 +2,15 @@ import rclpy
 import numpy as np
 from rclpy.node import Node
 from geometry_msgs.msg import Twist, PoseStamped
+from math import cos, sin, pi
 
 
 class ControlNode(Node):
     def __init__(self):
         super().__init__('controller_node')
+
+        # Declare a parameter for the number of points
+        self.declare_parameter('number_of_points', 6)  # Default is 4 points (square)
 
         # Subscriber to pose_sim
         self.pose_subscriber = self.create_subscription(
@@ -25,25 +29,30 @@ class ControlNode(Node):
 
         # Parameters
         self.current_pose = None  # To store the latest pose
-        self.square_trajectory = [  # Define square trajectory as a list of waypoints
-            (0.0, 0.0),  # Point 1
-            (1.0, 0.0),  # Point 2
-            (1.0, 1.0),  # Point 3
-            (0.0, 1.0),   # Point 4
-            (0.0, 0.0)  # Back to Point 1
-        ]
+        self.number_of_points = self.get_parameter('number_of_points').value  # Get the parameter value
+        self.polygon_trajectory = self.calculate_polygon_points(self.number_of_points)  # Generate polygon points
         self.current_target_index = 0  # Index of the current target waypoint
-        self.theta_target = 0.0  # Target orientation (radians)
 
         # Control gains
-        self.kp_linear = 0.15  # Proportional gain for linear velocity
-        self.kp_angular = 0.75  # Proportional gain for angular velocity
+        self.kp_linear = 0.2  # Proportional gain for linear velocity
+        self.kp_angular = 0.65  # Proportional gain for angular velocity
 
         # Timer for control loop
         self.timer = self.create_timer(0.1, self.control_loop)
 
         # Node Started
-        self.get_logger().info('Controller Node Started')
+        self.get_logger().info(f'Controller Node Started 🚀 with {self.number_of_points} points')
+
+    def calculate_polygon_points(self, num_points):
+        """Calculate points on a unit circle for a regular polygon."""
+        points = []
+        for i in range(num_points):
+            angle = 2 * pi * i / num_points  # Angle for each point
+            x = cos(angle)  # X-coordinate
+            y = sin(angle)  # Y-coordinate
+            points.append((x, y))
+        self.get_logger().info(f"Generated polygon with {num_points} points: {points}")
+        return points
 
     def pose_callback(self, msg):
         """Callback function to handle PoseStamped messages."""
@@ -64,16 +73,16 @@ class ControlNode(Node):
         )
 
         # Get the current target waypoint
-        if self.current_target_index >= len(self.square_trajectory):
+        if self.current_target_index >= len(self.polygon_trajectory):
             # Stop the robot if all waypoints are reached
             twist = Twist()
             twist.linear.x = 0.0
             twist.angular.z = 0.0
             self.cmd_vel_publisher.publish(twist)
-            self.get_logger().info('Square trajectory completed!')
+            self.get_logger().info('Polygon trajectory completed!')
             return
 
-        x_target, y_target = self.square_trajectory[self.current_target_index]
+        x_target, y_target = self.polygon_trajectory[self.current_target_index]
 
         # Calculate position and orientation errors
         x_error = x_target - x
@@ -94,7 +103,7 @@ class ControlNode(Node):
             linear_velocity = 0.0
             angular_velocity = 0.0
             self.current_target_index += 1  # Move to the next waypoint
-            self.get_logger().info(f"Reached waypoint {self.current_target_index}/{len(self.square_trajectory)}")
+            self.get_logger().info(f"Reached waypoint {self.current_target_index}/{len(self.polygon_trajectory)}")
             return
 
         # Publish velocity commands
@@ -115,6 +124,7 @@ class ControlNode(Node):
 def main(args=None):
     rclpy.init(args=args)
 
+    # Initialize the node
     node = ControlNode()
 
     try:
