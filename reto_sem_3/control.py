@@ -10,7 +10,7 @@ class ControlNode(Node):
         super().__init__('controller_node')
 
         # Declare a parameter for the number of points
-        self.declare_parameter('number_of_points', 6)  # Default is 4 points (square)
+        self.declare_parameter('number_of_points', 4)  # Default is 4 points (square)
 
         # Subscriber to pose_sim
         self.pose_subscriber = self.create_subscription(
@@ -33,9 +33,21 @@ class ControlNode(Node):
         self.polygon_trajectory = self.calculate_polygon_points(self.number_of_points)  # Generate polygon points
         self.current_target_index = 0  # Index of the current target waypoint
 
-        # Control gains
-        self.kp_linear = 0.2  # Proportional gain for linear velocity
-        self.kp_angular = 0.65  # Proportional gain for angular velocity
+        # PID gains for linear velocity
+        self.kp_linear = 0.2  # Proportional gain
+        self.ki_linear = 0.001  # Integral gain
+        self.kd_linear = 0.01  # Derivative gain
+
+        # PID gains for angular velocity
+        self.kp_angular = 0.9  # Proportional gain
+        self.ki_angular = 0.005  # Integral gain
+        self.kd_angular = 1.0  # Derivative gain
+
+        # PID state variables
+        self.linear_error_sum = 0.0  # Integral term for linear velocity
+        self.prev_linear_error = 0.0  # Previous error for linear velocity
+        self.angular_error_sum = 0.0  # Integral term for angular velocity
+        self.prev_angular_error = 0.0  # Previous error for angular velocity
 
         # Timer for control loop
         self.timer = self.create_timer(0.1, self.control_loop)
@@ -45,12 +57,13 @@ class ControlNode(Node):
 
     def calculate_polygon_points(self, num_points):
         """Calculate points on a unit circle for a regular polygon."""
-        points = []
-        for i in range(num_points):
+        points = [(1.0, 0.0)]  # Start at (1, 0) on the border of the unit circle
+        for i in range(1, num_points):  # Start from the second point
             angle = 2 * pi * i / num_points  # Angle for each point
             x = cos(angle)  # X-coordinate
             y = sin(angle)  # Y-coordinate
             points.append((x, y))
+        points.append(points[0])  # Close the polygon by returning to the starting point
         self.get_logger().info(f"Generated polygon with {num_points} points: {points}")
         return points
 
@@ -93,13 +106,31 @@ class ControlNode(Node):
         # Normalize theta_error to the range [-pi, pi]
         theta_error = np.arctan2(np.sin(theta_error), np.cos(theta_error))
 
-        # Calculate control signals
+        # Calculate distance error
         distance_error = np.sqrt(x_error**2 + y_error**2)
-        linear_velocity = self.kp_linear * distance_error
-        angular_velocity = self.kp_angular * theta_error
+
+        # PID control for linear velocity
+        self.linear_error_sum += distance_error  # Integral term
+        linear_error_diff = distance_error - self.prev_linear_error  # Derivative term
+        linear_velocity = (
+            self.kp_linear * distance_error +
+            self.ki_linear * self.linear_error_sum +
+            self.kd_linear * linear_error_diff
+        )
+        self.prev_linear_error = distance_error  # Update previous error
+
+        # PID control for angular velocity
+        self.angular_error_sum += theta_error  # Integral term
+        angular_error_diff = theta_error - self.prev_angular_error  # Derivative term
+        angular_velocity = (
+            self.kp_angular * theta_error +
+            self.ki_angular * self.angular_error_sum +
+            self.kd_angular * angular_error_diff
+        )
+        self.prev_angular_error = theta_error  # Update previous error
 
         # Stop linear velocity if the robot is close to the target
-        if distance_error < 0.05:  # 5 cm tolerance
+        if distance_error < 0.09:  # 0.509m tol0.erance
             linear_velocity = 0.0
             angular_velocity = 0.0
             self.current_target_index += 1  # Move to the next waypoint
