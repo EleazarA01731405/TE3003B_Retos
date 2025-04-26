@@ -11,13 +11,26 @@ class PuzzleBotPublisher(Node):
     def __init__(self):
         super().__init__('puzzlebot')
 
+        # Get namespace
+        self.namespace = self.get_namespace().rstrip('/')
+        
+        # Declare parameters
+        self.declare_parameter('initial_pos_x', 0.0)
+        self.declare_parameter('initial_pos_y', 0.0)
+        self.declare_parameter('initial_pos_z', 0.0)
+        self.declare_parameter('initial_pos_yaw', np.pi / 2)
+        self.declare_parameter('initial_pos_pitch', 0.0)
+        self.declare_parameter('initial_pos_roll', 0.0)
+        self.declare_parameter('odom_frame', 'odom')
+
         # Bot Initial Pose
-        self.intial_pos_x = 1.0
-        self.intial_pos_y = 1.0
-        self.intial_pos_z = 0.0
-        self.intial_pos_yaw = np.pi / 2
-        self.intial_pos_pitch = 0.0
-        self.intial_pos_roll = 0.0
+        self.intial_pos_x = self.get_parameter('initial_pos_x').value
+        self.intial_pos_y = self.get_parameter('initial_pos_y').value
+        self.intial_pos_z = self.get_parameter('initial_pos_z').value
+        self.intial_pos_yaw = self.get_parameter('initial_pos_yaw').value
+        self.intial_pos_pitch = self.get_parameter('initial_pos_pitch').value
+        self.intial_pos_roll = self.get_parameter('initial_pos_roll').value
+        self.odom_frame = self.get_parameter('odom_frame').get_parameter_value().string_value.strip('/')
 
         # Robot parameters
         self.wheel_radius = 0.05  # Radius of the wheels (meters)
@@ -100,8 +113,8 @@ class PuzzleBotPublisher(Node):
         """Define initial transforms."""
         self.base_footprint_tf = TransformStamped()
         self.base_footprint_tf.header.stamp = self.get_clock().now().to_msg()
-        self.base_footprint_tf.header.frame_id = 'odom'
-        self.base_footprint_tf.child_frame_id = 'base_footprint'
+        self.base_footprint_tf.header.frame_id = self.odom_frame
+        self.base_footprint_tf.child_frame_id = f"{self.namespace}/base_footprint"
         self.base_footprint_tf.transform.translation.x = self.intial_pos_x
         self.base_footprint_tf.transform.translation.y = self.intial_pos_y
         self.base_footprint_tf.transform.translation.z = 0.0
@@ -113,8 +126,8 @@ class PuzzleBotPublisher(Node):
 
         self.base_link_tf = TransformStamped()
         self.base_link_tf.header.stamp = self.get_clock().now().to_msg()
-        self.base_link_tf.header.frame_id = 'odom'
-        self.base_link_tf.child_frame_id = 'base_link'
+        self.base_link_tf.header.frame_id = self.odom_frame
+        self.base_link_tf.child_frame_id = f"{self.namespace}/base_link"
         self.base_link_tf.transform.translation.x = self.intial_pos_x
         self.base_link_tf.transform.translation.y = self.intial_pos_y
         self.base_link_tf.transform.translation.z = self.intial_pos_z
