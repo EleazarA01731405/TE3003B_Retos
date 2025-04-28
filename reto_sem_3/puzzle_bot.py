@@ -6,6 +6,7 @@ from sensor_msgs.msg import JointState
 import transforms3d
 import numpy as np
 
+
 class PuzzleBotPublisher(Node):
 
     def __init__(self):
@@ -13,7 +14,7 @@ class PuzzleBotPublisher(Node):
 
         # Get namespace
         self.namespace = self.get_namespace().rstrip('/')
-        
+
         # Declare parameters
         self.declare_parameter('initial_pos_x', 0.0)
         self.declare_parameter('initial_pos_y', 0.0)
@@ -56,14 +57,22 @@ class PuzzleBotPublisher(Node):
         self.tf_br_base_footprint = TransformBroadcaster(self)
 
         # Publisher for joint states
-        self.publisher = self.create_publisher(JointState, '/joint_states', 10)
+        self.publisher = self.create_publisher(JointState, 'joint_states', 10)
 
-        # Subscriber to /cmd_vel
-        self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_cb, 10)
+        # Subscriber to /cmd_vel (with namespace)
+        self.create_subscription(
+            Twist,
+            f'{self.namespace}/cmd_vel',
+            self.cmd_vel_cb,
+            10
+        )
 
         # Create a Timer for updating robot state
         timer_period = 0.01  # seconds
         self.timer = self.create_timer(timer_period, self.timer_cb)
+
+        # Node started
+        self.get_logger().info(f"PuzzleBotPublisher started for namespace: {self.namespace}")
 
     def cmd_vel_cb(self, msg):
         """Callback for /cmd_vel topic."""

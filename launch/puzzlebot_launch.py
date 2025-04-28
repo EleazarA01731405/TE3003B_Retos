@@ -42,7 +42,7 @@ def generate_launch_description():
     rviz_config = os.path.join(
                             get_package_share_directory('reto_sem_3'),
                             'rviz',
-                            'puzzlebot.rviz'
+                            'reto_semana_4_rviz_config.rviz'
                             )
     
     # Define launch rviz node

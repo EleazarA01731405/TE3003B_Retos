@@ -2,34 +2,35 @@ import rclpy
 import numpy as np
 from rclpy.node import Node
 from geometry_msgs.msg import Twist, PoseStamped
-from math import cos, sin, pi
-
 
 class ControlNode(Node):
     def __init__(self):
         super().__init__('controller_node')
 
-        # Declare a parameter for the number of points
+        # Declare parameters for namespace and number of points
         self.declare_parameter('number_of_points', 4)  # Default is 4 points (square)
 
-        # Subscriber to pose_sim
+        # Get namespace and number of points
+        self.namespace = self.get_namespace().rstrip('/')
+        self.number_of_points = self.get_parameter('number_of_points').value
+
+        # Subscriber to pose_sim (with namespace)
         self.pose_subscriber = self.create_subscription(
             PoseStamped,  # Message type
-            'pose_sim',   # Topic name
+            f'{self.namespace}/pose_sim',  # Topic name with namespace
             self.pose_callback,  # Callback function
             10  # QoS (queue size)
         )
 
-        # Publisher to cmd_vel
+        # Publisher to cmd_vel (with namespace)
         self.cmd_vel_publisher = self.create_publisher(
             Twist,  # Message type
-            'cmd_vel',  # Topic name
+            f'{self.namespace}/cmd_vel',  # Topic name with namespace
             10  # QoS (queue size)
         )
 
         # Parameters
         self.current_pose = None  # To store the latest pose
-        self.number_of_points = self.get_parameter('number_of_points').value  # Get the parameter value
         self.polygon_trajectory = self.calculate_polygon_points(self.number_of_points)  # Generate polygon points
         self.current_target_index = 0  # Index of the current target waypoint
 
@@ -53,15 +54,15 @@ class ControlNode(Node):
         self.timer = self.create_timer(0.1, self.control_loop)
 
         # Node Started
-        self.get_logger().info(f'Controller Node Started 🚀 with {self.number_of_points} points')
+        self.get_logger().info(f'Controller Node Started 🚀 for {self.namespace} with {self.number_of_points} points')
 
     def calculate_polygon_points(self, num_points):
         """Calculate points on a unit circle for a regular polygon."""
         points = [(1.0, 0.0)]  # Start at (1, 0) on the border of the unit circle
         for i in range(1, num_points):  # Start from the second point
-            angle = 2 * pi * i / num_points  # Angle for each point
-            x = cos(angle)  # X-coordinate
-            y = sin(angle)  # Y-coordinate
+            angle = 2 * np.pi * i / num_points  # Angle for each point
+            x = np.cos(angle)  # X-coordinate
+            y = np.sin(angle)  # Y-coordinate
             points.append((x, y))
         points.append(points[0])  # Close the polygon by returning to the starting point
         self.get_logger().info(f"Generated polygon with {num_points} points: {points}")
@@ -130,7 +131,7 @@ class ControlNode(Node):
         self.prev_angular_error = theta_error  # Update previous error
 
         # Stop linear velocity if the robot is close to the target
-        if distance_error < 0.09:  # 0.509m tol0.erance
+        if distance_error < 0.09:  # 0.09m tolerance
             linear_velocity = 0.0
             angular_velocity = 0.0
             self.current_target_index += 1  # Move to the next waypoint
