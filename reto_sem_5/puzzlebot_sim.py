@@ -4,6 +4,7 @@ from rclpy.node import Node
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import PoseStamped
+from nav_msgs.msg import Odometry
 
 # Class Definition
 class puzzlebot_sim(Node):
@@ -31,6 +32,7 @@ class puzzlebot_sim(Node):
         self.Wr_pub = self.create_publisher(Float32, 'wr', 10)
         self.Wl_pub = self.create_publisher(Float32, 'wl', 10)
         self.pose_pub = self.create_publisher(PoseStamped, 'pose_sim', 10)
+        self.odom_pub = self.create_publisher(Odometry, 'odom', 10)
         self.timer = self.create_timer(self.sample_time, self.timer_cb)
 
         # Node Started
@@ -71,6 +73,34 @@ class puzzlebot_sim(Node):
         self.pose_pub.publish(self.pose_msg)
         self.Wr_pub.publish(self.wr_msg)
         self.Wl_pub.publish(self.wl_msg)
+
+        # Create and publish the odometry message
+        odom_msg = Odometry()
+        odom_msg.header.stamp = self.get_clock().now().to_msg()
+        odom_msg.header.frame_id = 'base_link'  # Parent frame
+        odom_msg.child_frame_id = 'odom'  # Child frame
+
+        # Set position and orientation
+        odom_msg.pose.pose.position.x = self.xrk
+        odom_msg.pose.pose.position.y = self.yrk
+        odom_msg.pose.pose.position.z = 0.0
+        odom_msg.pose.pose.orientation.x = 0.0
+        odom_msg.pose.pose.orientation.y = 0.0
+        odom_msg.pose.pose.orientation.z = np.sin(self.thetark / 2)
+        odom_msg.pose.pose.orientation.w = np.cos(self.thetark / 2)
+
+        # Set pose covariance (example values, should be tuned based on your system)
+        odom_msg.pose.covariance = [
+            0.04, 0.0, 0.0, 0.0, 0.0, 0.0,  # Covariance for x
+            0.0, 0.01, 0.0, 0.0, 0.0, 0.0,  # Covariance for y
+            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # Covariance for z (not used in 2D)
+            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # Covariance for roll (not used in 2D)
+            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # Covariance for pitch (not used in 2D)
+            0.0, 0.0, 0.0, 0.0, 0.0, 0.02   # Covariance for yaw
+        ]
+
+        # Publish odometry
+        self.odom_pub.publish(odom_msg)
 
     # Subscriber Callback
     def input_callback(self, input_sgn):

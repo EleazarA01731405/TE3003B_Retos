@@ -13,7 +13,7 @@ def generate_launch_description():
 
     urdf_file_name = 'puzzle_bot.urdf'
     urdf = os.path.join(
-        get_package_share_directory('reto_sem_3'),
+        get_package_share_directory('reto_sem_5'),
         'urdf',
         urdf_file_name)
     
@@ -54,9 +54,9 @@ def generate_launch_description():
                             )
     
     rviz_config = os.path.join(
-                            get_package_share_directory('reto_sem_3'),
+                            get_package_share_directory('reto_sem_5'),
                             'rviz',
-                            'puzzlebot.rviz'
+                            'config.rviz'
                             )
     
     rviz_node = Node(name='rviz',
@@ -72,16 +72,16 @@ def generate_launch_description():
                     )
     
     puzzlebot_node = Node(name="puzzlebot",
-                            package='reto_sem_3',
+                            package='reto_sem_5',
                             executable='puzzle_bot'
                             )
     
     puzzlebot_sim_node = Node(name="puzzlebot_sim",
-                            package='reto_sem_3',
+                            package='reto_sem_5',
                             executable='puzzlebot_sim'
                             )
     puzzlebot_control_node = Node(name="controller_node",
-                            package='reto_sem_3',
+                            package='reto_sem_5',
                             executable='control'
                             )
 

@@ -52,6 +52,9 @@ class ControlNode(Node):
         # Timer for control loop
         self.timer = self.create_timer(0.1, self.control_loop)
 
+        # Add a parameter callback to handle dynamic updates
+        self.add_on_set_parameters_callback(self.parameter_callback)
+
         # Node Started
         self.get_logger().info(f'Controller Node Started 🚀 with {self.number_of_points} points')
 
@@ -66,6 +69,16 @@ class ControlNode(Node):
         points.append(points[0])  # Close the polygon by returning to the starting point
         self.get_logger().info(f"Generated polygon with {num_points} points: {points}")
         return points
+
+    def parameter_callback(self, params):
+        """Callback function to handle parameter updates."""
+        for param in params:
+            if param.name == 'number_of_points' and param.type_ == rclpy.Parameter.Type.INTEGER:
+                self.number_of_points = param.value
+                self.polygon_trajectory = self.calculate_polygon_points(self.number_of_points)
+                self.current_target_index = 0  # Reset to the first waypoint
+                self.get_logger().info(f"Updated number_of_points to {self.number_of_points}")
+        return rclpy.parameter.ParameterEventCallbackResult(successful=True)
 
     def pose_callback(self, msg):
         """Callback function to handle PoseStamped messages."""

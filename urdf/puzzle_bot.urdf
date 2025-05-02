@@ -6,7 +6,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://reto_sem_3/meshes/Puzzlebot_Jetson_Lidar_Edition_Base.stl"/>  
+                <mesh filename="package://reto_sem_5/meshes/Puzzlebot_Jetson_Lidar_Edition_Base.stl"/>  
             </geometry>
             <material name="yellow">
                 <color rgba="0.8 0.8 0.05 1.0"/>
@@ -19,7 +19,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="1.57 0 0"/>
             <geometry>
-                <mesh filename="package://reto_sem_3/meshes/Puzzlebot_Wheel.stl"/>
+                <mesh filename="package://reto_sem_5/meshes/Puzzlebot_Wheel.stl"/>
             </geometry>
             <material name="yellow">
                 <color rgba="0.8 0.8 0.05 1.0"/>
@@ -31,7 +31,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="1.57 0 0"/>
             <geometry>
-                <mesh filename="package://reto_sem_3/meshes/Puzzlebot_Wheel.stl"/>
+                <mesh filename="package://reto_sem_5/meshes/Puzzlebot_Wheel.stl"/>
             </geometry>
             <material name="yellow">
                 <color rgba="0.8 0.8 0.05 1.0"/>
@@ -43,7 +43,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://reto_sem_3/meshes/Puzzlebot_Caster_Wheel.stl"/>
+                <mesh filename="package://reto_sem_5/meshes/Puzzlebot_Caster_Wheel.stl"/>
             </geometry>
             <material name="yellow">
                 <color rgba="0.8 0.8 0.05 1.0"/>
