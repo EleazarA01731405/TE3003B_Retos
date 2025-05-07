@@ -89,14 +89,14 @@ class puzzlebot_sim(Node):
         odom_msg.pose.pose.orientation.z = np.sin(self.thetark / 2)
         odom_msg.pose.pose.orientation.w = np.cos(self.thetark / 2)
 
-        # Set pose covariance (example values, should be tuned based on your system)
+        # Set pose covariance
         odom_msg.pose.covariance = [
-            0.04, 0.0, 0.0, 0.0, 0.0, 0.0,  # Covariance for x
-            0.0, 0.01, 0.0, 0.0, 0.0, 0.0,  # Covariance for y
-            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # Covariance for z (not used in 2D)
-            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # Covariance for roll (not used in 2D)
-            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # Covariance for pitch (not used in 2D)
-            0.0, 0.0, 0.0, 0.0, 0.0, 0.02   # Covariance for yaw
+            0.000253953567, 0.000020759152, 0.0, 0.0, 0.0, 0.000796400351,
+            0.000020759152, 0.000292401754, 0.0, 0.0, 0.0, 0.001098941784,
+            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+            0.000796400351,0.001098941784, 0.0, 0.0, 0.0, 0.012178119415  # Covariance for yaw
         ]
 
         # Publish odometry
