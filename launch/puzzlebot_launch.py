@@ -88,7 +88,7 @@ def generate_launch_description():
                             package='reto_sem_3',
                             executable='control',
                             namespace='robot_1',
-                            parameters=[{'number_of_points': 4}] 
+                            parameters=[{'number_of_points': 3}] 
                             )
     
     # Define joint_state_publisher node for robot 1
