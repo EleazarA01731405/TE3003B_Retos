@@ -14,7 +14,7 @@ class puzzlebot_sim(Node):
         # Parameters
         self.r = 0.05  # Wheel radius (meters)
         self.whell_base = 0.19  # Distance between wheels (meters)
-        self.sample_time = 0.1  # Timer period (seconds)
+        self.sample_time = 0.01  # Timer period (seconds)
 
         # Set the messages
         self.wr_msg = Float32()
@@ -25,7 +25,15 @@ class puzzlebot_sim(Node):
         self.xrk = 0.0  # Initial x position (meters)
         self.yrk = 0.0  # Initial y position (meters)
         self.input_v = 0.0  # Linear velocity (m/s)
-        self.input_w = 0.0  # Angular velocity (rad/s) - FIXED
+        self.input_w = 0.0  # Angular velocity (rad/s)
+
+        # Covariance matrix initialization
+        self.Sigma = np.zeros((3, 3))  # State covariance matrix
+        self.process_noise = np.array([
+            [0.0000853, 0.0000107,  0.0000296],
+            [0.0000107, 0.0003924,  0.0001589],
+            [0.0000296, 0.0001589,  0.0000258]
+        ])
 
         # Declare publishers, subscribers, and timers
         self.input_sub = self.create_subscription(Twist, 'cmd_vel', self.input_callback, 10)
@@ -59,6 +67,12 @@ class puzzlebot_sim(Node):
         self.xrk += self.r * (wr + wl) / 2 * self.sample_time * np.cos(self.thetark)
         self.yrk += self.r * (wr + wl) / 2 * self.sample_time * np.sin(self.thetark)
 
+        # Normalize the yaw angle to [-π, π]
+        if self.thetark >= np.pi:
+            self.thetark -= 2 * np.pi
+        elif self.thetark <= -np.pi:
+            self.thetark += 2 * np.pi
+
         # Create and publish the pose message
         self.pose_msg = PoseStamped()
         self.pose_msg.header.stamp = self.get_clock().now().to_msg()
@@ -76,64 +90,39 @@ class puzzlebot_sim(Node):
         self.Wr_pub.publish(self.wr_msg)
         self.Wl_pub.publish(self.wl_msg)
 
+        # State vector
+        state_vector = np.array([self.xrk, self.yrk, self.thetark])
+
+        # Linearization: Compute Jacobian matrix (A_k)
+        A_k = np.array([
+            [1, 0, -self.input_v * np.sin(self.thetark) * self.sample_time],
+            [0, 1,  self.input_v * np.cos(self.thetark) * self.sample_time],
+            [0, 0, 1]
+        ])
+
+        # Control input matrix (B_k)
+        B_k = np.array([
+            [np.cos(self.thetark) * self.sample_time, 0],
+            [np.sin(self.thetark) * self.sample_time, 0],
+            [0, self.sample_time]
+        ])
+
+        # Control input vector
+        u = np.array([self.input_v, self.input_w])
+
+        # Propagate the state vector
+        state_vector = A_k @ state_vector + B_k @ u
+
+        # Propagate the covariance matrix
+        self.Sigma = A_k @ self.Sigma @ A_k.T + self.process_noise
+
         # Create and publish the odometry message
         odom_msg = Odometry()
         odom_msg.header.stamp = self.get_clock().now().to_msg()
-        odom_msg.header.frame_id = 'base_link'  # Parent frame
-        odom_msg.child_frame_id = 'odom'  # Child frame
+        odom_msg.header.frame_id = 'odom'
+        odom_msg.child_frame_id = 'base_link'  # Child frame
 
         # Set position and orientation
-        odom_msg.pose.pose.position.x = self.xrk
-        odom_msg.pose.pose.position.y = self.yrk
-        odom_msg.pose.pose.position.z = 0.0
-        odom_msg.pose.pose.orientation.x = 0.0
-        odom_msg.pose.pose.orientation.y = 0.0
-        odom_msg.pose.pose.orientation.z = np.sin(self.thetark / 2)
-        odom_msg.pose.pose.orientation.w = np.cos(self.thetark / 2)
-
-        # Extract yaw from quaternion
-        yaw = 2 * np.arctan2(odom_msg.pose.pose.orientation.z, odom_msg.pose.pose.orientation.w)
-
-        # State vector (x, y, yaw)
-        state_vector = np.array([self.xrk, self.yrk, yaw])
-
-        # Initial covariance matrix (3x3)
-        cov_matrix = np.array([
-            [0.0, 0.0, 0.0],  # Initial uncertainty in x
-            [0.0, 0.0, 0.0],  # Initial uncertainty in y
-            [0.0, 0.0, 0.0]   # Initial uncertainty in yaw
-        ])
-
-        # Process noise covariance matrix (Q)
-        q = np.array([
-            [0.0253953567, 0.000020759152, 0.000796400351],
-            [0.000020759152, 0.292401754, 0.001098941784],
-            [0.000796400351, 0.001098941784, 0.012178119415]
-        ])
-
-        # Update the state vector based on the motion model miu
-        state_vector[0] += self.sample_time * self.input_v * np.cos(state_vector[2])  # x
-        state_vector[1] += self.sample_time * self.input_v * np.sin(state_vector[2])  # y
-        state_vector[2] += self.sample_time * self.input_w                            # yaw
-
-        # Jacobian matrix (H) for the motion model
-        h = np.array([
-            [1, 0, -self.sample_time * self.input_v * np.sin(state_vector[2])],
-            [0, 1,  self.sample_time * self.input_v * np.cos(state_vector[2])],
-            [0, 0,  1]
-        ])
-
-        # Transpose of the Jacobian matrix (H.T)
-        h_t = h.T
-
-        # Propagate the covariance matrix
-        if self.flag == 0:
-            new_cov_matrix = h @ cov_matrix @ h_t + q
-        else:
-            # Update the covariance matrix with the new state
-            new_cov_matrix = h @ new_cov_matrix @ h_t + q
-
-        # Update the odometry message
         odom_msg.pose.pose.position.x = state_vector[0]
         odom_msg.pose.pose.position.y = state_vector[1]
         odom_msg.pose.pose.position.z = 0.0
@@ -144,13 +133,13 @@ class puzzlebot_sim(Node):
 
         # Flatten the covariance matrix for the odometry message
         odom_msg.pose.covariance = [
-                    new_cov_matrix[0, 0], new_cov_matrix[0, 1], 0.0, 0.0, 0.0, new_cov_matrix[0, 2],
-                    new_cov_matrix[1, 0], new_cov_matrix[1, 1], 0.0, 0.0, 0.0, new_cov_matrix[1, 2],
-                    0.0,              0.0,              0.0, 0.0, 0.0, 0.0,
-                    0.0,              0.0,              0.0, 0.0, 0.0, 0.0,
-                    0.0,              0.0,              0.0, 0.0, 0.0, 0.0,
-                    new_cov_matrix[2, 0], new_cov_matrix[2, 1], 0.0, 0.0, 0.0, new_cov_matrix[2, 2]
-                ]        
+            self.Sigma[0, 0], self.Sigma[0, 1], 0.0, 0.0, 0.0, self.Sigma[0, 2],
+            self.Sigma[1, 0], self.Sigma[1, 1], 0.0, 0.0, 0.0, self.Sigma[1, 2],
+            0.0,              0.0,              0.0, 0.0, 0.0, 0.0,
+            0.0,              0.0,              0.0, 0.0, 0.0, 0.0,
+            0.0,              0.0,              0.0, 0.0, 0.0, 0.0,
+            self.Sigma[2, 0], self.Sigma[2, 1], 0.0, 0.0, 0.0, self.Sigma[2, 2]
+        ]
 
         # Publish odometry
         self.odom_pub.publish(odom_msg)

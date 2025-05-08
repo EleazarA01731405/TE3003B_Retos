@@ -12,10 +12,10 @@ class PuzzleBotPublisher(Node):
         super().__init__('puzzlebot')
 
         # Bot Initial Pose
-        self.intial_pos_x = 1.0
-        self.intial_pos_y = 1.0
+        self.intial_pos_x = 0.0
+        self.intial_pos_y = 0.0
         self.intial_pos_z = 0.0
-        self.intial_pos_yaw = np.pi / 2
+        self.intial_pos_yaw = 0.0
         self.intial_pos_pitch = 0.0
         self.intial_pos_roll = 0.0
 
