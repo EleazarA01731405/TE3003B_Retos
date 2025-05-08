@@ -27,8 +27,9 @@ class puzzlebot_sim(Node):
         self.input_v = 0.0  # Linear velocity (m/s)
         self.input_w = 0.0  # Angular velocity (rad/s)
 
-        # Covariance matrix initialization
-        self.Sigma = np.zeros((3, 3))  # State covariance matrix
+        self.covariance = np.zeros((3, 3))  # Matriz de pose inicial
+
+        # Matriz de calculos obtenidos
         self.process_noise = np.array([
             [0.0000853, 0.0000107,  0.0000296],
             [0.0000107, 0.0003924,  0.0001589],
@@ -93,28 +94,28 @@ class puzzlebot_sim(Node):
         # State vector
         state_vector = np.array([self.xrk, self.yrk, self.thetark])
 
-        # Linearization: Compute Jacobian matrix (A_k)
-        A_k = np.array([
+        # Linearization
+        jac_lin = np.array([
             [1, 0, -self.input_v * np.sin(self.thetark) * self.sample_time],
             [0, 1,  self.input_v * np.cos(self.thetark) * self.sample_time],
             [0, 0, 1]
         ])
 
-        # Control input matrix (B_k)
-        B_k = np.array([
+        # Normalization matrix
+        norm = np.array([
             [np.cos(self.thetark) * self.sample_time, 0],
             [np.sin(self.thetark) * self.sample_time, 0],
             [0, self.sample_time]
         ])
 
         # Control input vector
-        u = np.array([self.input_v, self.input_w])
+        miu = np.array([self.input_v, self.input_w])
 
         # Propagate the state vector
-        state_vector = A_k @ state_vector + B_k @ u
+        state_vector = jac_lin @ state_vector + norm @ miu
 
         # Propagate the covariance matrix
-        self.Sigma = A_k @ self.Sigma @ A_k.T + self.process_noise
+        self.covariance = jac_lin @ self.covariance @ jac_lin.T + self.process_noise
 
         # Create and publish the odometry message
         odom_msg = Odometry()
@@ -133,12 +134,12 @@ class puzzlebot_sim(Node):
 
         # Flatten the covariance matrix for the odometry message
         odom_msg.pose.covariance = [
-            self.Sigma[0, 0], self.Sigma[0, 1], 0.0, 0.0, 0.0, self.Sigma[0, 2],
-            self.Sigma[1, 0], self.Sigma[1, 1], 0.0, 0.0, 0.0, self.Sigma[1, 2],
+            self.covariance[0, 0], self.covariance[0, 1], 0.0, 0.0, 0.0, self.covariance[0, 2],
+            self.covariance[1, 0], self.covariance[1, 1], 0.0, 0.0, 0.0, self.covariance[1, 2],
             0.0,              0.0,              0.0, 0.0, 0.0, 0.0,
             0.0,              0.0,              0.0, 0.0, 0.0, 0.0,
             0.0,              0.0,              0.0, 0.0, 0.0, 0.0,
-            self.Sigma[2, 0], self.Sigma[2, 1], 0.0, 0.0, 0.0, self.Sigma[2, 2]
+            self.covariance[2, 0], self.covariance[2, 1], 0.0, 0.0, 0.0, self.covariance[2, 2]
         ]
 
         # Publish odometry
