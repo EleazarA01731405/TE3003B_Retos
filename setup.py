@@ -3,7 +3,7 @@ import os
 from glob import glob
 
 
-package_name = 'reto_sem_5'
+package_name = 'reto_sem_6'
 
 setup(
     name=package_name,
@@ -29,9 +29,10 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'puzzle_bot = reto_sem_5.puzzle_bot:main',
-            'puzzlebot_sim = reto_sem_5.puzzlebot_sim:main',
-            'control = reto_sem_5.control:main',
+            'puzzle_bot = reto_sem_6.puzzle_bot:main',
+            'puzzlebot_sim = reto_sem_6.puzzlebot_sim:main',
+            'control = reto_sem_6.control:main',
+            'point_gen = reto_sem_6.point_gen:main',
         ],
     },
 )
