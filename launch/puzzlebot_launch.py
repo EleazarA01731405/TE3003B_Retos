@@ -65,13 +65,13 @@ def generate_launch_description():
                         package='reto_sem_6',
                         executable='puzzle_bot',
                         namespace='r0',
-                        parameters=[{'initial_pos_x':0.0,
-                                     'initial_pos_y':0.0,
-                                     'initial_pos_z':0.0,
-                                     'initial_pos_yaw':1.57,
-                                     'initial_pos_pitch':0.0,
-                                     'initial_pos_roll':0.0,
-                                     'odom_frame':'odom'}]
+                        parameters=[{'initial_pos_x':0.0,       # Intitial position for robot <#> on x
+                                     'initial_pos_y':0.0,       # Intitial position for robot <#> on y
+                                     'initial_pos_z':0.0,       # Intitial position for robot <#> on y
+                                     'initial_pos_roll':0.0,    # Intitial orientation for robot <#> on roll
+                                     'initial_pos_pitch':0.0,   # Intitial orientation for robot <#> on pitch
+                                     'initial_pos_yaw':0.0,     # Intitial orientation for robot <#> on yaw
+                                     'odom_frame':'odom'}]      # Robot <#> initial parent frame
                             )
     
     # Launch path 
@@ -121,13 +121,13 @@ def generate_launch_description():
                         package='reto_sem_6',
                         executable='puzzle_bot',
                         namespace='r1',
-                        parameters=[{'initial_pos_x':0.0,
-                                     'initial_pos_y':0.0,
-                                     'initial_pos_z':0.0,
-                                     'initial_pos_yaw':1.57,
-                                     'initial_pos_pitch':0.0,
-                                     'initial_pos_roll':0.0,
-                                     'odom_frame':'odom'}]
+                        parameters=[{'initial_pos_x':0.0,       # Intitial position for robot <#> on x
+                                     'initial_pos_y':0.0,       # Intitial position for robot <#> on y
+                                     'initial_pos_z':0.0,       # Intitial position for robot <#> on y
+                                     'initial_pos_roll':0.0,    # Intitial orientation for robot <#> on roll
+                                     'initial_pos_pitch':0.0,   # Intitial orientation for robot <#> on pitch
+                                     'initial_pos_yaw':0.0,     # Intitial orientation for robot <#> on yaw
+                                     'odom_frame':'odom'}]      # Robot <#> initial parent frame
                             )
     
     # Launch path 
