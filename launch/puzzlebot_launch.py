@@ -64,7 +64,7 @@ def generate_launch_description():
                         name="puzzlebot",
                         package='reto_sem_6',
                         executable='puzzle_bot',
-                        namespace='r0',
+                        #namespace='r0',
                         parameters=[{'initial_pos_x':0.0,       # Intitial position for robot <#> on x
                                      'initial_pos_y':0.0,       # Intitial position for robot <#> on y
                                      'initial_pos_z':0.0,       # Intitial position for robot <#> on y
@@ -79,7 +79,7 @@ def generate_launch_description():
                             name="puzzlebot_sim",
                             package='reto_sem_6',
                             executable='puzzlebot_sim',
-                            namespace="r0"
+                            #namespace="r0"
                             )
     
     # Launch control node
@@ -87,7 +87,7 @@ def generate_launch_description():
                             name="controller_node",
                             package='reto_sem_6',
                             executable='control',
-                            namespace="r0"
+                            #namespace="r0"
                             )
     
     # Launch point generator 
@@ -95,7 +95,7 @@ def generate_launch_description():
                             name="point_gen",
                             package='reto_sem_6',
                             executable="point_gen",
-                            namespace="r0",
+                            #namespace="r0",
                             parameters=[
                                 {'gen_type': 0}, 
                                 {'n_points': 4},
@@ -110,12 +110,13 @@ def generate_launch_description():
                             output='screen',
                             parameters=[{'robot_description': robot_desc}],
                             arguments=[urdf],
-                            namespace="r0"
+                            #namespace="r0"
                             )
     #-------------------------------------------------------------------------
 
     #-----------------------------Start of robot 2----------------------------
     # Launch puzzlebot
+    """
     puzzlebot_node_1 = Node(
                         name="puzzlebot",
                         package='reto_sem_6',
@@ -168,6 +169,7 @@ def generate_launch_description():
                             arguments=[urdf],
                             namespace="r1"
                             )
+    """
     #-------------------------------------------------------------------------
     
     #Shutdown node on exit condition
@@ -195,9 +197,8 @@ def generate_launch_description():
                                 )
     
     # Launch 
-    l_d = LaunchDescription([stf_node_0, stf_node_1, rviz_config, rviz_node, rqt_tf_tree_node, shutdown_log, *shutdown_on_exit,
-                             puzzlebot_node_0, puzzlebot_sim_node_0, puzzlebot_control_node_0, point_gen_node_0, robot_state_pub_node_0,
-                             puzzlebot_node_1, puzzlebot_sim_node_1, puzzlebot_control_node_1, point_gen_node_1, robot_state_pub_node_1])
+    l_d = LaunchDescription([stf_node_0, stf_node_1, rviz_node, rqt_tf_tree_node, shutdown_log, *shutdown_on_exit,
+                             puzzlebot_node_0, puzzlebot_sim_node_0, puzzlebot_control_node_0, point_gen_node_0, robot_state_pub_node_0])
 
     return l_d
 
@@ -212,3 +213,4 @@ def generate_launch_description():
     
     #   Launch for each robot: 
     #   puzzlebot_node_<#>, puzzlebot_sim_node_<#>, puzzlebot_control_node_<#>, point_gen_node_<#>, robot_state_pub_node_<#>
+    #   puzzlebot_node_1, puzzlebot_sim_node_1, puzzlebot_control_node_1, point_gen_node_1, robot_state_pub_node_1
