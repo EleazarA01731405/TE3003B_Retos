@@ -47,7 +47,10 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'puzzlebot_gazebo = puzzlebot_gazebo.puzzlebot_gazebo:main'
+            'puzzlebot_gazebo = puzzlebot_gazebo.puzzlebot_gazebo:main',
+            'odom = puzzlebot_gazebo.odom:main',
+            'puzzlebot_bot = puzzlebot_gazebo.puzzle_bot:main',
+            'puzzlebot_sim = puzzlebot_gazebo.puzzlebot_sim:main'
         ],
     },
 )

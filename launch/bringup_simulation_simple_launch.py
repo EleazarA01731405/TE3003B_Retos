@@ -92,10 +92,29 @@ def generate_launch_description():
 
         robot_launches.append(robot_launch)
 
-    puzzlebot_node = Node(name="bug0_algorithm",
-                            package='puzzlebot_gazebo',
-                            executable='puzzlebot_gazebo'
-                            )
+    puzzlebot_node = Node(
+                        name="bug0_algorithm",
+                        package='puzzlebot_gazebo',
+                        executable='puzzlebot_gazebo'
+                        )
+    
+    odom_node = Node(
+                    name="odom",
+                    package='puzzlebot_gazebo',
+                    executable='odom'
+                    )
+    
+    puzzle_bot = Node(
+                    name="puzzle_bot",
+                    package='puzzlebot_gazebo',
+                    executable='puzzle_bot'
+                    )
+    
+    puzzlebot_sim = Node(
+                    name="puzzlebot_sim",
+                    package='puzzlebot_gazebo',
+                    executable='puzzlebot_sim'
+                    )
     # -----------------------------------------------------------------------------
     #                          BUILD FINAL LAUNCH DESCRIPTION
     # -----------------------------------------------------------------------------

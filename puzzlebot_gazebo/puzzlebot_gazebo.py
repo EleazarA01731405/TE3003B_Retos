@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, PoseStamped
 import math
 
 
@@ -17,6 +17,14 @@ class Bug0Algorithm(Node):
         self.min_distance_r = 0
         self.timer = self.create_timer(0.1, self.loop_callback)
 
+        # Subscriber to pose_sim
+        self.pose_subscriber = self.create_subscription(
+            PoseStamped,  # Message type
+            'pose_sim',   # Topic name
+            self.pose_callback,  # Callback function
+            10  # QoS (queue size)
+        )
+
         # Parameters
         self.current_pose = None
         self.goal = [1.45,1.2]
@@ -30,6 +38,10 @@ class Bug0Algorithm(Node):
         self.kp_angular = 0.9
         self.ki_angular = 0.005
         self.kd_angular = 1.0
+
+    def pose_callback(self, msg):
+        """Callback function to handle PoseStamped messages."""
+        self.current_pose = msg
 
     def lidar_callback(self, msg):
         # Extract the first 15 and last 15 values from the ranges array
@@ -63,16 +75,13 @@ class Bug0Algorithm(Node):
             self.min_distance_r = float('inf')  # No valid readings
 
     def loop_callback(self):
-        self.move_towards_goal()
         # Check if there is a direct path to the goal
-        """
         if self.min_distance_f > self.obstacle_threshold:
             # If an obstacle is detected, follow the wall
             self.move_towards_goal()
         else:
             # If no obstacle, move towards the goal
             self.wall_follower()
-        """
 
     def wall_follower(self):
         # Bug 0 logic for wall following
