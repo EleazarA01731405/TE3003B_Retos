@@ -16,8 +16,20 @@ class Bug0Algorithm(Node):
         self.min_distance_l = 0
         self.min_distance_r = 0
         self.timer = self.create_timer(0.1, self.loop_callback)
-        # Set Goal 
+
+        # Parameters
+        self.current_pose = None
         self.goal = [1.45,1.2]
+
+        # PID parameters
+        self.kp_linear = 0.2
+        self.ki_linear = 0.001
+        self.kd_linear = 0.01
+
+        # PID angular parameters
+        self.kp_angular = 0.9
+        self.ki_angular = 0.005
+        self.kd_angular = 1.0
 
     def lidar_callback(self, msg):
         # Extract the first 15 and last 15 values from the ranges array
@@ -51,13 +63,16 @@ class Bug0Algorithm(Node):
             self.min_distance_r = float('inf')  # No valid readings
 
     def loop_callback(self):
+        self.move_towards_goal()
         # Check if there is a direct path to the goal
-        if self.min_distance_f < self.obstacle_threshold:
+        """
+        if self.min_distance_f > self.obstacle_threshold:
             # If an obstacle is detected, follow the wall
-            self.wall_follower()
+            self.move_towards_goal()
         else:
             # If no obstacle, move towards the goal
-            self.move_towards_goal()
+            self.wall_follower()
+        """
 
     def wall_follower(self):
         # Bug 0 logic for wall following
@@ -65,25 +80,27 @@ class Bug0Algorithm(Node):
             self.turn_l()
         elif self.min_distance_f < self.obstacle_threshold and self.min_distance_r > self.obstacle_threshold:
             self.turn_l()
-        elif self.min_distance_f > self.obstacle_threshold and self.min_distance_r > self.obstacle_threshold:
-            self.move_forward()
         elif self.min_distance_f > self.obstacle_threshold and self.min_distance_r < self.obstacle_threshold:
             self.move_forward()
+        #elif self.min_distance_f > self.obstacle_threshold and self.min_distance_r > self.obstacle_threshold:
+        #    self.turn_r()
 
     def move_towards_goal(self):
-        """Move towards the self.goal using PID control."""
-        # Extract current position and orientation
+        
         if self.current_pose is None:
-            # Wait until the first pose is received
+            # Wait for the first pose update
             return
-
+        
+        # Extract the current pose
         x = self.current_pose.pose.position.x
         y = self.current_pose.pose.position.y
+
         theta = 2 * math.atan2(
             self.current_pose.pose.orientation.z,
             self.current_pose.pose.orientation.w
-        )
-
+            )
+        
+        """Move towards the self.goal using PID control."""
         # Extract the goal position
         x_target, y_target = self.goal
 
