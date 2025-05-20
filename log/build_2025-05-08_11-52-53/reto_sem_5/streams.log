@@ -1,0 +1,39 @@
+[0.664s] Invoking command in '/home/ar0ck/TE3003B_Retos': PYTHONPATH=/home/ar0ck/TE3003B_Retos/build/reto_sem_5/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ar0ck/TE3003B_Retos/install/reto_sem_5/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/reto_sem_5 build --build-base /home/ar0ck/TE3003B_Retos/build/reto_sem_5/build install --record /home/ar0ck/TE3003B_Retos/build/reto_sem_5/install.log --single-version-externally-managed install_data
+[0.854s] running egg_info
+[0.855s] writing build/reto_sem_5/reto_sem_5.egg-info/PKG-INFO
+[0.855s] writing dependency_links to build/reto_sem_5/reto_sem_5.egg-info/dependency_links.txt
+[0.856s] writing entry points to build/reto_sem_5/reto_sem_5.egg-info/entry_points.txt
+[0.856s] writing requirements to build/reto_sem_5/reto_sem_5.egg-info/requires.txt
+[0.856s] writing top-level names to build/reto_sem_5/reto_sem_5.egg-info/top_level.txt
+[0.873s] reading manifest file 'build/reto_sem_5/reto_sem_5.egg-info/SOURCES.txt'
+[0.873s] adding license file 'LICENSE'
+[0.874s] writing manifest file 'build/reto_sem_5/reto_sem_5.egg-info/SOURCES.txt'
+[0.874s] running build
+[0.874s] running build_py
+[0.874s] copying reto_sem_5/puzzlebot_sim.py -> /home/ar0ck/TE3003B_Retos/build/reto_sem_5/build/lib/reto_sem_5
+[0.874s] copying reto_sem_5/__init__.py -> /home/ar0ck/TE3003B_Retos/build/reto_sem_5/build/lib/reto_sem_5
+[0.874s] copying reto_sem_5/odom.py -> /home/ar0ck/TE3003B_Retos/build/reto_sem_5/build/lib/reto_sem_5
+[0.874s] copying reto_sem_5/control.py -> /home/ar0ck/TE3003B_Retos/build/reto_sem_5/build/lib/reto_sem_5
+[0.874s] copying reto_sem_5/puzzle_bot.py -> /home/ar0ck/TE3003B_Retos/build/reto_sem_5/build/lib/reto_sem_5
+[0.874s] running install
+[0.877s] running install_lib
+[0.886s] copying /home/ar0ck/TE3003B_Retos/build/reto_sem_5/build/lib/reto_sem_5/puzzlebot_sim.py -> /home/ar0ck/TE3003B_Retos/install/reto_sem_5/lib/python3.10/site-packages/reto_sem_5
+[0.886s] byte-compiling /home/ar0ck/TE3003B_Retos/install/reto_sem_5/lib/python3.10/site-packages/reto_sem_5/puzzlebot_sim.py to puzzlebot_sim.cpython-310.pyc
+[0.887s] running install_data
+[0.887s] copying resource/reto_sem_5 -> /home/ar0ck/TE3003B_Retos/install/reto_sem_5/share/ament_index/resource_index/packages
+[0.887s] copying package.xml -> /home/ar0ck/TE3003B_Retos/install/reto_sem_5/share/reto_sem_5
+[0.887s] copying launch/puzzlebot_launch.py -> /home/ar0ck/TE3003B_Retos/install/reto_sem_5/share/reto_sem_5/launch
+[0.887s] copying rviz/puzzlebot.rviz -> /home/ar0ck/TE3003B_Retos/install/reto_sem_5/share/reto_sem_5/rviz
+[0.887s] copying meshes/Puzzlebot_Caster_Wheel.stl -> /home/ar0ck/TE3003B_Retos/install/reto_sem_5/share/reto_sem_5/meshes
+[0.887s] copying meshes/Puzzlebot_Jetson_Lidar_Edition_Base.stl -> /home/ar0ck/TE3003B_Retos/install/reto_sem_5/share/reto_sem_5/meshes
+[0.888s] copying meshes/Puzzlebot_Wheel.stl -> /home/ar0ck/TE3003B_Retos/install/reto_sem_5/share/reto_sem_5/meshes
+[0.888s] copying urdf/puzzle_bot.urdf -> /home/ar0ck/TE3003B_Retos/install/reto_sem_5/share/reto_sem_5/urdf
+[0.888s] running install_egg_info
+[0.897s] removing '/home/ar0ck/TE3003B_Retos/install/reto_sem_5/lib/python3.10/site-packages/reto_sem_5-0.0.0-py3.10.egg-info' (and everything under it)
+[0.897s] Copying build/reto_sem_5/reto_sem_5.egg-info to /home/ar0ck/TE3003B_Retos/install/reto_sem_5/lib/python3.10/site-packages/reto_sem_5-0.0.0-py3.10.egg-info
+[0.898s] running install_scripts
+[0.972s] Installing control script to /home/ar0ck/TE3003B_Retos/install/reto_sem_5/lib/reto_sem_5
+[0.972s] Installing puzzle_bot script to /home/ar0ck/TE3003B_Retos/install/reto_sem_5/lib/reto_sem_5
+[0.972s] Installing puzzlebot_sim script to /home/ar0ck/TE3003B_Retos/install/reto_sem_5/lib/reto_sem_5
+[0.972s] writing list of installed files to '/home/ar0ck/TE3003B_Retos/build/reto_sem_5/install.log'
+[0.988s] Invoked command in '/home/ar0ck/TE3003B_Retos' returned '0': PYTHONPATH=/home/ar0ck/TE3003B_Retos/build/reto_sem_5/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ar0ck/TE3003B_Retos/install/reto_sem_5/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/reto_sem_5 build --build-base /home/ar0ck/TE3003B_Retos/build/reto_sem_5/build install --record /home/ar0ck/TE3003B_Retos/build/reto_sem_5/install.log --single-version-externally-managed install_data

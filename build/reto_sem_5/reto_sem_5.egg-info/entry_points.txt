@@ -1,0 +1,4 @@
+[console_scripts]
+control = reto_sem_5.control:main
+puzzle_bot = reto_sem_5.puzzle_bot:main
+puzzlebot_sim = reto_sem_5.puzzlebot_sim:main

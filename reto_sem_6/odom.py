@@ -15,9 +15,9 @@ class OdometryNode(Node):
         self.sample_time = 0.1   # Time step in seconds
 
         # Robot state
-        self.x = 0.0  # X position in meters
-        self.y = 0.0  # Y position in meters
-        self.yaw = 0.0  # Orientation in radians
+        self.x = 1.45  # X position in meters
+        self.y = -3.5 # Y position in meters
+        self.yaw = 1.57  # Orientation in radians
 
         # Encoder velocities
         self.vel_enc_l = 0.0  # Left wheel velocity (rad/s)
