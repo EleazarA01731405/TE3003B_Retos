@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>puzzlebot_gazebo</name>
+  <name>reto_final_real</name>
   <version>0.0.0</version>
   <description>Puzzlebot Gazebo Sim</description>
   <maintainer email="mario.mtz@manchester-robotics.com">Mario Martinez</maintainer>
@@ -11,12 +11,9 @@
   <depend>sensor_msgs</depend>
   <depend>geometry_msgs</depend>
   <depend>ros2launch</depend>
-  <depend>tf2_ros_py</depend>
   <depend>python3-numpy</depend>
   <depend>python3-transforms3d</depend>
   <depend>rclpy</depend>
-  <depend>robot_state_publisher</depend>
-  <depend>joint_state_publisher_gui</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

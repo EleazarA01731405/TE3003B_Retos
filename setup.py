@@ -3,7 +3,7 @@ import os
 from glob import glob
 
 
-package_name = 'puzzlebot_gazebo'
+package_name = 'reto_final_real'
 
 setup(
     name=package_name,
@@ -17,40 +17,18 @@ setup(
         (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
         (os.path.join('share', package_name, 'config'), glob(os.path.join('config', '*.[yma]*'))),
         (os.path.join('share', package_name, 'rviz'), glob(os.path.join('rviz', '*.rviz'))),
-    ]+ [
-        (os.path.join('share', package_name, root), [os.path.join(root, file)]) 
-        for root, _, files in os.walk('urdf') for file in files
-    ]+
-    [
-        (os.path.join('share', package_name, root), [os.path.join(root, file)]) 
-        for root, _, files in os.walk('meshes') for file in files
-    ]+
-    [
-        (os.path.join('share', package_name, root), [os.path.join(root, file)]) 
-        for root, _, files in os.walk('models') for file in files
-    ]+
-    [
-        (os.path.join('share', package_name, root), [os.path.join(root, file)]) 
-        for root, _, files in os.walk('worlds') for file in files
-    ]
-    +
-    [
-        (os.path.join('share', package_name, root), [os.path.join(root, file)]) 
-        for root, _, files in os.walk('plugins') for file in files
     ],
+
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='Mario Martinez',
-    maintainer_email='mario.mtz@manchester-robotics.com',
-    description='Puzzlebot Gazebo Sim',
+    maintainer='Eleazar Olivas | Angel Estrada | Arick Morelos',
+    maintainer_email='A01731405@tec.mx | A01732584@tec.mx | A01735192@tec.mx',
+    description='Entrega final real',
     license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'puzzlebot_gazebo = puzzlebot_gazebo.puzzlebot_gazebo:main',
-            'odom = puzzlebot_gazebo.odom:main',
-            'puzzlebot_bot = puzzlebot_gazebo.puzzle_bot:main',
-            'puzzlebot_sim = puzzlebot_gazebo.puzzlebot_sim:main'
+            'wall_follower = reto_final_real.wall_follower:main'
         ],
     },
 )
