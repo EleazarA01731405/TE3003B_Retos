@@ -28,7 +28,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'wall_follower = reto_final_real.wall_follower:main'
+            'wall_follower = reto_final_real.wall_follower:main',
+            'degrees_calibration = reto_final_real.degrees_calibration:main'
         ],
     },
 )
