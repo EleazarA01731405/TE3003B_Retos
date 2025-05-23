@@ -25,7 +25,9 @@ class WallFollower(Node):
         self.min_threshold = 0.20  # Minimum distance to detect obstacles
         self.max_threshold = 0.30  # Increase from 0.60 to 0.80
         self.right_max_threshold = 17 #Max treshold for right sensing
-        self.back_max_threshold = 0.30  # Threshold for back sensor
+        self.right_min_threshold = 0.15 #Min treshold for right sensing
+        self.back_min_threshold = 0.15 #Min treshold for back sensing
+        self.back_max_threshold = 0.50  # Threshold for back sensor
         self.min_dis_f = float('inf')  # Front distance
         self.min_dis_r = float('inf')  # Right distance
         self.min_dis_b = float('inf')  # Back distance
@@ -38,7 +40,7 @@ class WallFollower(Node):
         # Extract ranges for front, right, and back
         front = msg.ranges[:60] + msg.ranges[-60:]
         right = msg.ranges[750:870]
-        back = msg.ranges[540:660]
+        back = msg.ranges[540:800]
 
         # Filter out invalid values (inf, NaN, below 15 cm, or above 12 m)
         val_readings_f = [x for x in front if 0.15 <= x <= 12.0 and not np.isnan(x)]
@@ -52,11 +54,14 @@ class WallFollower(Node):
 
     def loop_callback(self):
         # Log the current distances
-        self.get_logger().info(
-            f"Obstacle Found: {self.obstacle_found} | Front: {self.min_dis_f:.2f} | Right: {self.min_dis_r:.2f} | Back: {self.min_dis_b:.2f}"
-        )
+        #self.get_logger().info(
+        #    f"Obstacle Found: {self.obstacle_found} | Front: {self.min_dis_f:.2f} | Right: {self.min_dis_r:.2f} | Back: {self.min_dis_b:.2f}"
+        #)
 
+        self.get_logger().info(f"Front: {self.min_dis_f:6f}   |   Right: {self.min_dis_r:6f}   |   Back: {self.min_dis_b:6f}")
         # Check if there is an obstacle in front (first contact)
+
+
         if not self.obstacle_found and (0.15 <= self.min_dis_f <= self.max_threshold):
             self.turn_l()
             self.obstacle_found = True
@@ -73,7 +78,7 @@ class WallFollower(Node):
             self.get_logger().info('Obstacle detected FRB[True | True | False], turning left')
 
         # Check for corners of object found (following object)
-        elif self.obstacle_found and (self.min_dis_f > self.max_threshold) and (self.min_dis_r > self.right_max_threshold) and (self.min_dis_b < self.back_max_threshold):
+        elif self.obstacle_found and (self.min_dis_f > 0.15) and (self.min_dis_r > 0.15) and (0.15 < self.min_dis_b < 1.5):
             self.turn_r()
             self.get_logger().info('Obstacle corner detected FRB[False | False | True], turning right')
 
@@ -82,6 +87,9 @@ class WallFollower(Node):
             self.move_forward()
             self.obstacle_found = False
             self.get_logger().info('Obstacle cleared, moving forward')
+
+            if self.min_dis_b < self.back_max_threshold:
+                self.turn_r()
 
         # Default behavior: Stop or turn if no valid readings
         else:
