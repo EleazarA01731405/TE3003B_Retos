@@ -24,7 +24,8 @@ setup(
         'console_scripts': [
             'aruco_create = aruco_create.camera_calib:main',
             'aruco_detect_node = aruco_create.aruco_detect_node:main',
-
+            'aruco_odom = aruco_create.odom:main',
+            'aruco_control = aruco_create.control:main'
         ],
     },
 )

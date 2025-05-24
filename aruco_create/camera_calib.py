@@ -33,11 +33,9 @@ class ImageProcessor(Node):
         # Scale to half resolution
         height, width = cv_image.shape[:2]
         scaled = cv2.resize(cv_image, (width // 2, height // 2), interpolation=cv2.INTER_AREA)
-        # Crop to center half vertically (remove upper 1/4 and lower 1/4)
+        # Crop to lower half only
         h = scaled.shape[0]
-        upper = h // 4
-        lower = upper + h // 2
-        cropped = scaled[upper:lower, :]
+        cropped = scaled[h // 2 : h, :]
 
         # Publish processed image
         processed_msg = self.bridge.cv2_to_imgmsg(cropped, encoding='bgr8')

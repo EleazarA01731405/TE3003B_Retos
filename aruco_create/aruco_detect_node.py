@@ -27,6 +27,7 @@ class ArucoDetectorNode(Node):
         
         self.image_pub = self.create_publisher(Image, '/aruco_image', 10)
         self.info_pub = self.create_publisher(Float32MultiArray, '/aruco_info', 10)
+        self.pose_pub = self.create_publisher(PoseStamped, '/aruco_pose', 10)
 
         # Load calibration from YAML
         package_share = ament_index_python.packages.get_package_share_directory('aruco_create')
@@ -129,10 +130,10 @@ class ArucoDetectorNode(Node):
         if self.angle is not None and self.distance is not None:
             # Define your known ArUco marker positions (id: [x, y, yaw])
             aruco_positions = {
-                0: [1.0, 2.0, 0.0],
-                1: [2.5, 3.5, 1.57],
-                2: [4.0, 1.0, 3.14],
-                3: [1.0, 1.0, 1.57],
+                0: [1.83, 0.70, np.pi/2],
+                1: [1.49, 2.44, 0.0],
+                2: [0.0, 1.88, -np.pi/2],
+                3: [0.16, 0.0, np.pi],
             }
 
             # Use the last detected marker id, distance, and angle
@@ -148,6 +149,18 @@ class ArucoDetectorNode(Node):
                     self.get_logger().info(
                         f"Estimated robot position in world from ArUco {marker_id}: x={robot_x:.2f}, y={robot_y:.2f}, yaw={robot_yaw:.2f}"
                     )
+                    # Publish PoseStamped
+                    pose_msg = PoseStamped()
+                    pose_msg.header.stamp = self.get_clock().now().to_msg()
+                    pose_msg.header.frame_id = "map"
+                    pose_msg.pose.position.x = robot_x
+                    pose_msg.pose.position.y = robot_y
+                    pose_msg.pose.position.z = 0.0
+                    pose_msg.pose.orientation.x = 0.0
+                    pose_msg.pose.orientation.y = 0.0
+                    pose_msg.pose.orientation.z = math.sin(robot_yaw / 2)
+                    pose_msg.pose.orientation.w = math.cos(robot_yaw / 2)
+                    self.pose_pub.publish(pose_msg)
 
 def main(args=None):
     rclpy.init(args=args)
