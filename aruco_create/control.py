@@ -91,7 +91,7 @@ class ControlNode(Node):
         distance_error = np.sqrt(x_error**2 + y_error**2)
 
         # Thresholds
-        angle_threshold = 0.025  # radians (~4.5 degrees)
+        angle_threshold = 0.05  # radians (~4.5 degrees)
         distance_threshold = 0.05  # meters
 
         twist = Twist()
