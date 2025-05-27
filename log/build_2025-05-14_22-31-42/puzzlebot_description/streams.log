@@ -1,0 +1,79 @@
+[0.811s] Invoking command in '/home/ar0ck/ros2_ws_t3003/src/puzzlebot_description': PYTHONPATH=/home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/puzzlebot_description build --build-base /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/build install --record /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/install.log --single-version-externally-managed install_data
+[0.963s] running egg_info
+[0.963s] creating ../../build/puzzlebot_description/puzzlebot_description.egg-info
+[0.971s] writing ../../build/puzzlebot_description/puzzlebot_description.egg-info/PKG-INFO
+[0.971s] writing dependency_links to ../../build/puzzlebot_description/puzzlebot_description.egg-info/dependency_links.txt
+[0.971s] writing entry points to ../../build/puzzlebot_description/puzzlebot_description.egg-info/entry_points.txt
+[0.972s] writing requirements to ../../build/puzzlebot_description/puzzlebot_description.egg-info/requires.txt
+[0.972s] writing top-level names to ../../build/puzzlebot_description/puzzlebot_description.egg-info/top_level.txt
+[0.972s] writing manifest file '../../build/puzzlebot_description/puzzlebot_description.egg-info/SOURCES.txt'
+[0.992s] reading manifest file '../../build/puzzlebot_description/puzzlebot_description.egg-info/SOURCES.txt'
+[0.992s] adding license file 'LICENSE'
+[0.992s] writing manifest file '../../build/puzzlebot_description/puzzlebot_description.egg-info/SOURCES.txt'
+[0.992s] running build
+[0.992s] running build_py
+[0.992s] creating /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/build
+[0.992s] creating /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/build/lib
+[0.992s] creating /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/build/lib/puzzlebot_description
+[0.992s] copying puzzlebot_description/__init__.py -> /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/build/lib/puzzlebot_description
+[0.992s] copying puzzlebot_description/joint_state_publisher.py -> /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/build/lib/puzzlebot_description
+[0.993s] running install
+[0.996s] running install_lib
+[1.005s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages/puzzlebot_description
+[1.005s] copying /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/build/lib/puzzlebot_description/__init__.py -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages/puzzlebot_description
+[1.005s] copying /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/build/lib/puzzlebot_description/joint_state_publisher.py -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages/puzzlebot_description
+[1.005s] byte-compiling /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages/puzzlebot_description/__init__.py to __init__.cpython-310.pyc
+[1.005s] byte-compiling /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages/puzzlebot_description/joint_state_publisher.py to joint_state_publisher.cpython-310.pyc
+[1.006s] running install_data
+[1.006s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/ament_index
+[1.006s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/ament_index/resource_index
+[1.006s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/ament_index/resource_index/packages
+[1.006s] copying resource/puzzlebot_description -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/ament_index/resource_index/packages
+[1.006s] copying package.xml -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description
+[1.006s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/launch
+[1.006s] copying launch/robot_state_publisher_launch.py -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/launch
+[1.006s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/config
+[1.006s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/rviz
+[1.006s] copying rviz/puzzlebot_desc.rviz -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/rviz
+[1.006s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf
+[1.006s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_mechanical
+[1.006s] copying urdf/mcr2_mechanical/puzzlebot_jetson_lidar_base.urdf.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_mechanical
+[1.006s] copying urdf/mcr2_mechanical/puzzlebot_jetson_base.urdf.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_mechanical
+[1.006s] copying urdf/mcr2_mechanical/puzzlebot_hacker_base.urdf.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_mechanical
+[1.006s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_control
+[1.006s] copying urdf/mcr2_control/gazebo_control.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_control
+[1.007s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_sensors
+[1.007s] copying urdf/mcr2_sensors/laser_camera_bracket.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_sensors
+[1.007s] copying urdf/mcr2_sensors/lidar.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_sensors
+[1.007s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_misc
+[1.007s] copying urdf/mcr2_misc/materials.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_misc
+[1.007s] copying urdf/mcr2_misc/macros.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_misc
+[1.007s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_robots
+[1.007s] copying urdf/mcr2_robots/puzzlebot_jetson_ed.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_robots
+[1.007s] copying urdf/mcr2_robots/puzzlebot_jetson_lidar_ed.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_robots
+[1.008s] copying urdf/mcr2_robots/puzzlebot_hacker_ed.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_robots
+[1.008s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_robots/hacker_ed
+[1.008s] copying urdf/mcr2_robots/hacker_ed/parameters_hacker_ed.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_robots/hacker_ed
+[1.008s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_robots/jetson_lidar_ed
+[1.008s] copying urdf/mcr2_robots/jetson_lidar_ed/parameters_jetson_lidar_ed.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_robots/jetson_lidar_ed
+[1.008s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_robots/jetson_ed
+[1.008s] copying urdf/mcr2_robots/jetson_ed/parameters_jetson_ed.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_robots/jetson_ed
+[1.008s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes
+[1.008s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/sensors
+[1.008s] copying meshes/sensors/Laser_Camera_Bracket.stl -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/sensors
+[1.008s] copying meshes/sensors/RPLidar.stl -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/sensors
+[1.008s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/misc
+[1.008s] copying meshes/misc/NVIDIA_Jetson.stl -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/misc
+[1.008s] copying meshes/misc/DC_Motor.stl -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/misc
+[1.009s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/wheels
+[1.009s] copying meshes/wheels/Puzzlebot_Caster_Wheel.stl -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/wheels
+[1.009s] copying meshes/wheels/Puzzlebot_Wheel.stl -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/wheels
+[1.009s] creating /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/bases
+[1.009s] copying meshes/bases/Puzzlebot_Hacker_Editon_Base.stl -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/bases
+[1.009s] copying meshes/bases/Puzzlebot_Jetson_Lidar_Edition_Base.stl -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/meshes/bases
+[1.009s] running install_egg_info
+[1.020s] Copying ../../build/puzzlebot_description/puzzlebot_description.egg-info to /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages/puzzlebot_description-0.0.0-py3.10.egg-info
+[1.020s] running install_scripts
+[1.113s] Installing joint_state_publisher script to /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/puzzlebot_description
+[1.113s] writing list of installed files to '/home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/install.log'
+[1.139s] Invoked command in '/home/ar0ck/ros2_ws_t3003/src/puzzlebot_description' returned '0': PYTHONPATH=/home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/puzzlebot_description build --build-base /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/build install --record /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/install.log --single-version-externally-managed install_data

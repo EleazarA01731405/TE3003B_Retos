@@ -1,4 +1,4 @@
 import sys
 if sys.prefix == '/usr':
     sys.real_prefix = sys.prefix
-    sys.prefix = sys.exec_prefix = '/home/ar0ck/TE3003B_Retos/install/reto_sem_6'
+    sys.prefix = sys.exec_prefix = '/home/ar0ck/ros2_ws_t3003/install/reto_sem_6'

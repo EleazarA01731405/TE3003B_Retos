@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: puzzlebot_description
+Version: 0.0.0
+Summary: Puzzlebot Description Files
+Maintainer: Mario Martinez
+Maintainer-email: mario.mtz@manchester-robotics.com
+License: Apache-2.0
+License-File: LICENSE
+Requires-Dist: setuptools

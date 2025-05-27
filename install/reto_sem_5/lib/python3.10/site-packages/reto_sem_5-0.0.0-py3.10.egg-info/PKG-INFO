@@ -1,9 +1,0 @@
-Metadata-Version: 2.1
-Name: reto_sem_5
-Version: 0.0.0
-Summary: URDF Link Examples
-Maintainer: Angel Estrada
-Maintainer-email: A01732584@tec.com
-License: Apache-2.0
-License-File: LICENSE
-Requires-Dist: setuptools

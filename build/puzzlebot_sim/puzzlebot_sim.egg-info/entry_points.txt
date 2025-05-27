@@ -1,2 +1,0 @@
-[console_scripts]
-static_tf_launch = puzzlebot_sim.static_tf_launch:main

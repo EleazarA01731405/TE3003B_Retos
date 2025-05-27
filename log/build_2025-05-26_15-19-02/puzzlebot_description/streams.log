@@ -1,0 +1,23 @@
+[1.034s] Invoking command in '/home/ar0ck/ros2_ws_t3003/src/puzzlebot_description': PYTHONPATH=/home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/puzzlebot_description build --build-base /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/build install --record /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/install.log --single-version-externally-managed install_data
+[1.167s] running egg_info
+[1.176s] writing ../../build/puzzlebot_description/puzzlebot_description.egg-info/PKG-INFO
+[1.176s] writing dependency_links to ../../build/puzzlebot_description/puzzlebot_description.egg-info/dependency_links.txt
+[1.176s] writing entry points to ../../build/puzzlebot_description/puzzlebot_description.egg-info/entry_points.txt
+[1.176s] writing requirements to ../../build/puzzlebot_description/puzzlebot_description.egg-info/requires.txt
+[1.176s] writing top-level names to ../../build/puzzlebot_description/puzzlebot_description.egg-info/top_level.txt
+[1.194s] reading manifest file '../../build/puzzlebot_description/puzzlebot_description.egg-info/SOURCES.txt'
+[1.194s] adding license file 'LICENSE'
+[1.195s] writing manifest file '../../build/puzzlebot_description/puzzlebot_description.egg-info/SOURCES.txt'
+[1.195s] running build
+[1.195s] running build_py
+[1.195s] running install
+[1.199s] running install_lib
+[1.207s] running install_data
+[1.208s] copying urdf/mcr2_control/gazebo_control.xacro -> /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/share/puzzlebot_description/urdf/mcr2_control
+[1.208s] running install_egg_info
+[1.218s] removing '/home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages/puzzlebot_description-0.0.0-py3.10.egg-info' (and everything under it)
+[1.218s] Copying ../../build/puzzlebot_description/puzzlebot_description.egg-info to /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages/puzzlebot_description-0.0.0-py3.10.egg-info
+[1.219s] running install_scripts
+[1.298s] Installing joint_state_publisher script to /home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/puzzlebot_description
+[1.298s] writing list of installed files to '/home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/install.log'
+[1.321s] Invoked command in '/home/ar0ck/ros2_ws_t3003/src/puzzlebot_description' returned '0': PYTHONPATH=/home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ar0ck/ros2_ws_t3003/install/puzzlebot_description/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/puzzlebot_description build --build-base /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/build install --record /home/ar0ck/ros2_ws_t3003/build/puzzlebot_description/install.log --single-version-externally-managed install_data

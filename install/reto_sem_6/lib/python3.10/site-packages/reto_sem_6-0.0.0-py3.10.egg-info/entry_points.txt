@@ -1,5 +1,6 @@
 [console_scripts]
-control = reto_sem_6.control:main
-point_gen = reto_sem_6.point_gen:main
-puzzle_bot = reto_sem_6.puzzle_bot:main
+aruco = reto_sem_6.aruco:main
+odom = reto_sem_6.odom:main
+puzzlebot_bot = reto_sem_6.puzzle_bot:main
+puzzlebot_gazebo = reto_sem_6.puzzlebot_gazebo:main
 puzzlebot_sim = reto_sem_6.puzzlebot_sim:main
