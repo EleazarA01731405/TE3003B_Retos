@@ -27,7 +27,7 @@ def generate_launch_description():
             'name': '',
             'type': 'puzzlebot_jetson_lidar_ed',
             'x': -3, 'y': 1.0, 'yaw': -1.5708, #Posición inicial del robot
-            #'x': -1.5, 'y': -1.5, 'yaw': -1.5708, #pa pruebas
+            #'x': -1.0, 'y': -.5, 'yaw': 0.0, #pa pruebas
             'lidar_frame': 'laser_frame',
             'camera_frame': 'camera_link_optical',
             'tof_frame': 'tof_link'

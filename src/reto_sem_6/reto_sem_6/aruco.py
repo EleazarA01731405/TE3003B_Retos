@@ -17,7 +17,7 @@ class aruco(Node):
 
         # Camera matrix and distortion coefficients for simulation
         self.K = np.array([[528.433723449707,   0, 320],
-                           [  0, 528.433723449707, 240],
+                           [  0, 528.4337997436523, 240],
                            [  0,   0,   1]])
         self.D = np.zeros(5)
 
@@ -88,23 +88,20 @@ class aruco(Node):
                         cv.line(cv_image, bottomLeft, topLeft, (0, 255, 0), 2)
                     cv.drawFrameAxes(cv_image, self.K, self.D, rvec, tvec, 0.01)
 
-                    # Extraer los valores de traslación desde tvec
-                    tvec_x = tvec[0][0][0]  # Traslación en X
-                    tvec_y = tvec[0][0][1]  # Traslación en Y
-
-                    # Calcular la posición del robot en el sistema global
-                    x_camara = self.aruco_position[marker_id][0] + distance * np.cos(self.aruco_position[marker_id][2] + tvec_x)
-                    y_camara = self.aruco_position[marker_id][1] + distance * np.sin(self.aruco_position[marker_id][2] + tvec_y)
-
-                    offset = 0.1  # Desplazamiento de 10 cm hacia atrás
-                    x_robot = x_camara + offset * np.cos(self.aruco_position[marker_id][2])
-                    y_robot = y_camara + offset * np.sin(self.aruco_position[marker_id][2])
-
                     # Convertir rvec a matriz de rotación
                     rotation_matrix, _ = cv.Rodrigues(rvec)
 
+                    # Transformar el vector de traslación al sistema global
+                    # tvec contiene la posición del marcador en el sistema de la cámara
+                    tvec_global = np.dot(rotation_matrix.T, tvec[0][0].reshape(3, 1))
+
                     # Extraer el ángulo yaw (rotación alrededor del eje Z)
                     yaw = np.arctan2(rotation_matrix[1, 0], rotation_matrix[0, 0])
+
+                    # Calcular la posición del robot en el sistema global
+                    # Ajustar el cálculo para evitar invertir las coordenadas
+                    x_robot = self.aruco_position[marker_id][0] - tvec_global[2][0] * np.cos(self.aruco_position[marker_id][2]) + tvec_global[0][0] * np.sin(self.aruco_position[marker_id][2])
+                    y_robot = self.aruco_position[marker_id][1] - tvec_global[2][0] * np.sin(self.aruco_position[marker_id][2]) - tvec_global[0][0] * np.cos(self.aruco_position[marker_id][2])
 
                     # Crear mensaje Pose para publicar la posición del marcador
                     pose_msg = Pose()
@@ -112,8 +109,9 @@ class aruco(Node):
                     pose_msg.position.y = y_robot
                     pose_msg.orientation.z = yaw
 
-                    if distance <= 1.0: # Si la distancia es menor o igual a 2 metros
+                    if distance <= 1.0:  # Si la distancia es menor o igual a 1 metro
                         # Publicar la posición del robot
+                        self.get_logger().info(f"Aruco detectado ID ={marker_id}")
                         self.aruco_pos.publish(pose_msg)
             else:
                 # Crear mensaje Pose para publicar la posición del marcador

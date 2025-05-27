@@ -66,6 +66,9 @@ class OdometryNode(Node):
         delta_y = v * math.sin(self.yaw) * self.sample_time
         delta_yaw = w * self.sample_time
 
+        #self.x += delta_x
+        #self.y += delta_y
+        #"""
         if self.aruco_pos_x and self.aruco_pos_y:
             # Use ArUco position to adjust the robot's position
             self.x = self.aruco_pos_x
@@ -73,7 +76,7 @@ class OdometryNode(Node):
         else:
             self.x += delta_x
             self.y += delta_y
-
+        #"""
         self.yaw += delta_yaw
 
         # Normalize yaw to the range [-pi, pi]
