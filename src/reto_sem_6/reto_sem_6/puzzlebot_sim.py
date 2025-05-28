@@ -28,6 +28,11 @@ class puzzlebot_sim(Node):
 
         self.covariance = np.zeros((3, 3))  # Matriz de pose inicial
 
+        # Initialize ArUco position attributes
+        self.aruco_pos_x = None
+        self.aruco_pos_y = None
+        self.aruco_orientation_z = None
+
         # Variable para almacenar el último mensaje recibido
         self.last_aruco_msg = None
 
@@ -40,7 +45,6 @@ class puzzlebot_sim(Node):
 
         # Declare publishers, subscribers, and timers
         self.sub_aruco_pos = self.create_subscription(Pose, 'aruco_pos', self.aruco_callback, 10)
-        self.sub_aruco_detect = self.create_subscription(Int32, 'aruco_detect', self.aruco_detect_callback, 10)
         self.input_sub = self.create_subscription(Twist, 'cmd_vel', self.input_callback, 10)
         self.Wr_pub = self.create_publisher(Float32, 'wr', 10)
         self.Wl_pub = self.create_publisher(Float32, 'wl', 10)
@@ -67,18 +71,18 @@ class puzzlebot_sim(Node):
         self.wr_msg.data = wr
         self.wl_msg.data = wl
         
-        if self.flag == 1:
+        if self.aruco_pos_x and self.aruco_pos_y:
             self.xrk = self.aruco_pos_x
             self.yrk = self.aruco_pos_y
-            self.thetark = self.aruco_orientation_z
             self.covariance = np.zeros((3, 3))
             self.get_logger().info(f"Posicion actualizada con aruco")
         else:
             # Calculate the new pose of the robot
-            self.thetark += self.r * (wr - wl) / self.whell_base * self.sample_time
             self.xrk += self.r * (wr + wl) / 2 * self.sample_time * np.cos(self.thetark)
             self.yrk += self.r * (wr + wl) / 2 * self.sample_time * np.sin(self.thetark)
             self.get_logger().info(f"Posicion actualizada")
+
+        self.thetark += self.r * (wr - wl) / self.whell_base * self.sample_time
 
         # Normalize the yaw angle to [-π, π]
         if self.thetark >= np.pi:
@@ -168,10 +172,6 @@ class puzzlebot_sim(Node):
         self.aruco_pos_x = msg.position.x
         self.aruco_pos_y = msg.position.y
         self.aruco_orientation_z = msg.orientation.z
-        
-    # Subscriber Callback
-    def aruco_detect_callback(self, msg):
-        self.flag = msg.data
 
 # Main
 def main(args=None):

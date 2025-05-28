@@ -127,5 +127,6 @@ def generate_launch_description():
         *robot_launches,
         puzzlebot_node,
         odom_node,
+        puzzlebot_sim,
         aruco_node
     ])

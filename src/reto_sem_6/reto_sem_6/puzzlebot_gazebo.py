@@ -157,7 +157,7 @@ class Bug0Algorithm(Node):
 
     def wall_follower(self):
         # Bug 0 logic for wall following
-        desired_distance = 0.3  # Distancia deseada de la pared (en metros)
+        desired_distance = 0.35  # Distancia deseada de la pared (en metros)
         kp = 1.0  # Ganancia proporcional para el control de distancia
 
         if self.min_distance_f <= self.obstacle_threshold:

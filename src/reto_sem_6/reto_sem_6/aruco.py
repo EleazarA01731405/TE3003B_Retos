@@ -43,7 +43,6 @@ class aruco(Node):
 
         # Aruco_pos publisher
         self.aruco_pos = self.create_publisher(Pose, '/aruco_pos', 10)
-        self.aruco_detect = self.create_publisher(Int32, '/aruco_detect', 10)
 
     def camera_callback(self, msg):
         """Callback function to process camera images."""
