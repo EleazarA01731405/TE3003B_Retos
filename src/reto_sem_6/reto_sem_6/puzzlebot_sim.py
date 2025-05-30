@@ -75,12 +75,12 @@ class puzzlebot_sim(Node):
             self.xrk = self.aruco_pos_x
             self.yrk = self.aruco_pos_y
             self.covariance = np.zeros((3, 3))
-            self.get_logger().info(f"Posicion actualizada con aruco")
+            #self.get_logger().info(f"Posicion actualizada con aruco")
         else:
             # Calculate the new pose of the robot
             self.xrk += self.r * (wr + wl) / 2 * self.sample_time * np.cos(self.thetark)
             self.yrk += self.r * (wr + wl) / 2 * self.sample_time * np.sin(self.thetark)
-            self.get_logger().info(f"Posicion actualizada")
+            #self.get_logger().info(f"Posicion actualizada")
 
         self.thetark += self.r * (wr - wl) / self.whell_base * self.sample_time
 

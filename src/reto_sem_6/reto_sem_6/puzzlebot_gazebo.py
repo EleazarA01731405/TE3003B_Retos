@@ -226,7 +226,7 @@ class Bug0Algorithm(Node):
         else:
             # Fase 2: Moverse en línea recta hacia el objetivo
             linear_velocity = self.kp_linear * distance_to_goal
-            linear_velocity = min(linear_velocity, 0.8)  # Limitar velocidad lineal
+            linear_velocity = min(linear_velocity, 0.5)  # Limitar velocidad lineal
 
             twist = Twist()
             twist.linear.x = linear_velocity
@@ -237,20 +237,20 @@ class Bug0Algorithm(Node):
 
     def move_forward(self):
         twist = Twist()
-        twist.linear.x = 0.2  # Move forward at 0.2 m/s
+        twist.linear.x = 0.2  
         twist.angular.z = 0.0
         self.cmd_vel_publisher.publish(twist)
 
     def turn_r(self):
         twist = Twist()
         twist.linear.x = 0.0
-        twist.angular.z = -0.5  # Turn at 0.5 rad/s
+        twist.angular.z = -0.8  
         self.cmd_vel_publisher.publish(twist)
 
     def turn_l(self):
         twist = Twist()
         twist.linear.x = 0.0
-        twist.angular.z = 0.5  # Turn at -0.5 rad/s
+        twist.angular.z = 0.8  
         self.cmd_vel_publisher.publish(twist)
 
 def main(args=None):

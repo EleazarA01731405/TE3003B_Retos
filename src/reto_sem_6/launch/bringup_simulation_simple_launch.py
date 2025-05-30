@@ -5,6 +5,10 @@ from launch_ros.actions import Node
 from launch.substitutions import TextSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
+from launch.actions import  EmitEvent, LogInfo, RegisterEventHandler
+from launch.event_handlers import OnProcessExit, OnShutdown
+from launch.events import Shutdown
+from launch.substitutions import EnvironmentVariable, LocalSubstitution
 
 
 def generate_launch_description():
@@ -118,6 +122,43 @@ def generate_launch_description():
                     package='reto_sem_6',
                     executable='puzzlebot_sim'
                     )
+    
+    rviz_config = os.path.join(
+                            get_package_share_directory('reto_sem_6'),
+                            'rviz',
+                            'rviz_sim_reto.rviz'
+                            )
+    
+    rviz_node = Node(name='rviz',
+                    package='rviz2',
+                    executable='rviz2',
+                    arguments=['-d', rviz_config],
+                    on_exit=Shutdown(),
+                    )
+    
+    shutdown_on_exit = [RegisterEventHandler(
+                            OnProcessExit(
+                                target_action=node,
+                                on_exit=[
+                                    LogInfo(msg=(EnvironmentVariable(name='USER'),
+                                            ' exited the node')),
+                                    EmitEvent(event=Shutdown(
+                                        reason='Node Exited'))
+                                ]
+                            )
+                        ) for node in [aruco_node, puzzlebot_sim, odom_node, puzzlebot_node]
+                    ]
+ 
+
+    # Ensure full shutdown when SIGINT (Ctrl+C) is received
+    shutdown_log = RegisterEventHandler(
+                                    OnShutdown(
+                                        on_shutdown=[LogInfo(
+                                            msg=['Launch was asked to shutdown: ',
+                                                LocalSubstitution('event.reason')]
+                                        )]
+                                    )
+                                )
     # -----------------------------------------------------------------------------
     #                          BUILD FINAL LAUNCH DESCRIPTION
     # -----------------------------------------------------------------------------
@@ -128,5 +169,8 @@ def generate_launch_description():
         puzzlebot_node,
         odom_node,
         puzzlebot_sim,
+        rviz_node,
+        shutdown_log,
+        *shutdown_on_exit,
         aruco_node
     ])
