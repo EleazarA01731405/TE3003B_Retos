@@ -12,6 +12,15 @@ Este repositorio contiene todos los retos semanales desarrollados durante el cur
 
 Cada reto semanal y el reto final tiene su propia rama con su respectivo nombre.
 
+## 👨‍💻 Autores
+
+| Nombre                      | Matrícula   |
+|----------------------------|-------------|
+| Arick Morelos del Campo    | A01735692   |
+| Eleazar Olivas Gaspar      | A01731405   |
+| Angel Estrada Centeno      | A01732584   |
+
+
 ## 📁 Contenido
  
 - `reto_final_real`: Paquete del reto final para la implementacion fisica del robot.
