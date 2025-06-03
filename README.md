@@ -13,10 +13,9 @@ Este repositorio contiene todos los retos semanales desarrollados durante el cur
 Cada reto semanal y el reto final tiene su propia rama con su respectivo nombre.
 
 ## 📁 Contenido
-
-- `Reto_Semana_01` a `Reto_Semana_06`: Código, documentación y simulaciones de cada reto.
-- `reto_final_sim`: Implementación del reto final en entorno virtual usando **Gazebo** y **ROS 2**.
-- `reto_final_real`: Implementación en hardware físico.
+ 
+- `reto_final_real`: Paquete del reto final para la implementacion fisica del robot.
+- `reto_final_simulacion`: Paquete para la implemetacion del reto final dentro de un tentorno simulado **Gazebo Garden** y **Ros 2 Humble**.
 
 ## 🧰 Tecnologías y Herramientas Utilizadas
 
