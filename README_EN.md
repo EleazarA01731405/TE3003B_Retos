@@ -8,18 +8,29 @@
 
 ---
 
-This repository contains all the weekly challenges developed during the **TE3003B** course in collaboration with **Manchester Robotics**, as well as the final project implemented in both **real** and **simulated** environments.
+## 📘 About the Course
+
+**TE3003B** is a robotics course aimed at applying concepts of artificial intelligence, computer vision, and autonomous control to mobile platforms. In collaboration with **Manchester Robotics**, students completed progressive challenges culminating in a comprehensive final project.
+
+---
+
+This repository contains all weekly challenges developed during the **TE3003B** course, as well as the final project implemented in both **real** and **simulated** environments.
 
 Each weekly challenge and the final project has its own branch with a corresponding name.
 
+## 🎥 Demonstration Video of Final Project (Real and Simulated)
+
+[https://youtu.be/0YuKBZ8c9U4](https://youtu.be/0YuKBZ8c9U4)
+
+---
+
 ## 👨‍💻 Authors
 
-| Name                       | ID          |
+| Name                        | Student ID  |
 |----------------------------|-------------|
 | Arick Morelos del Campo    | A01735692   |
 | Eleazar Olivas Gaspar      | A01731405   |
 | Angel Estrada Centeno      | A01732584   |
-
 
 ## 📁 Contents
 
