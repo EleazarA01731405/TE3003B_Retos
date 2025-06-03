@@ -8,9 +8,21 @@
 
 ---
 
+## 📘 Sobre el Curso
+
+**TE3003B** es una materia del área de robótica que tiene como objetivo aplicar conceptos de inteligencia artificial, visión computacional y control autónomo en plataformas móviles. En colaboración con **Manchester Robotics**, se llevaron a cabo retos progresivos que culminaron en un desafío final integral.
+
+---
+
 Este repositorio contiene todos los retos semanales desarrollados durante el curso **TE3003B** en colaboración con **Manchester Robotics**, así como el proyecto final implementado tanto en un entorno **real** como **simulado**.
 
 Cada reto semanal y el reto final tiene su propia rama con su respectivo nombre.
+
+## 🎥 Video demostrativo del Reto Final (real y simulado)
+
+[https://youtu.be/0YuKBZ8c9U4](https://youtu.be/0YuKBZ8c9U4)
+
+---
 
 ## 👨‍💻 Autores
 
@@ -20,11 +32,10 @@ Cada reto semanal y el reto final tiene su propia rama con su respectivo nombre.
 | Eleazar Olivas Gaspar      | A01731405   |
 | Angel Estrada Centeno      | A01732584   |
 
-
 ## 📁 Contenido
  
-- `reto_final_real`: Paquete del reto final para la implementacion fisica del robot.
-- `reto_final_simulacion`: Paquete para la implemetacion del reto final dentro de un tentorno simulado **Gazebo Garden** y **Ros 2 Humble**.
+- `reto_final_real`: Paquete del reto final para la implementacion física del robot.
+- `reto_final_simulacion`: Paquete para la implementación del reto final dentro de un entorno simulado **Gazebo Garden** y **Ros 2 Humble**.
 
 ## 🧰 Tecnologías y Herramientas Utilizadas
 
